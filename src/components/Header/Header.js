@@ -1,16 +1,24 @@
-import React from 'react';
-import styled from 'styled-components/macro';
-
-import { QUERIES, WEIGHTS } from '../../constants';
-import Logo from '../Logo';
-import Icon from '../Icon';
-import UnstyledButton from '../UnstyledButton';
-import SuperHeader from '../SuperHeader';
-import MobileMenu from '../MobileMenu';
-import VisuallyHidden from '../VisuallyHidden';
+import React from "react";
+import styled from "styled-components/macro";
+import { QUERIES, WEIGHTS } from "../../constants";
+import Logo from "../Logo";
+import Icon from "../Icon";
+import UnstyledButton from "../UnstyledButton";
+import SuperHeader from "../SuperHeader";
+import MobileMenu from "../MobileMenu";
+import VisuallyHidden from "../VisuallyHidden";
 
 const Header = () => {
   const [showMobileMenu, setShowMobileMenu] = React.useState(false);
+
+  const links = [
+    { text: "Sale", href: "/sale" },
+    { text: "New Releases", href: "/sale" },
+    { text: "Men", href: "/men" },
+    { text: "Women", href: "/women" },
+    { text: "Kids", href: "/kids" },
+    { text: "Collections", href: "/collections" },
+  ];
 
   return (
     <header>
@@ -20,12 +28,9 @@ const Header = () => {
           <Logo />
         </LogoWrapper>
         <DesktopNav>
-          <NavLink href="/sale">Sale</NavLink>
-          <NavLink href="/new">New&nbsp;Releases</NavLink>
-          <NavLink href="/men">Men</NavLink>
-          <NavLink href="/women">Women</NavLink>
-          <NavLink href="/kids">Kids</NavLink>
-          <NavLink href="/collections">Collections</NavLink>
+          {links.map((link, i) => (
+            <MainLink key={i} text={link.text} href={link.href} />
+          ))}
         </DesktopNav>
         <MobileActions>
           <ShoppingBagButton>
@@ -114,16 +119,41 @@ const Filler = styled.div`
   }
 `;
 
-const NavLink = styled.a`
+const NavLink = styled.span`
   font-size: 1.125rem;
-  text-transform: uppercase;
-  text-decoration: none;
   color: var(--color-gray-900);
   font-weight: ${WEIGHTS.medium};
+  display: block;
+  will-change: transform;
+  transition: transform 0.2s ease-out;
+`;
 
-  &:first-of-type {
+const MainLinkWrapper = styled.a`
+  text-transform: uppercase;
+  text-decoration: none;
+  &:first-of-type ${NavLink} {
     color: var(--color-secondary);
   }
+  height: 1.5rem;
+  overflow: hidden;
+  will-change: transform;
+  @media (prefers-reduced-motion: no-preference) {
+    :hover ${NavLink} {
+      transform: translateY(-100%);
+    }
+  }
 `;
+const BoldNavLink = styled(NavLink)`
+  font-weight: ${WEIGHTS.bold};
+`;
+
+const MainLink = ({ text, href }) => {
+  return (
+    <MainLinkWrapper href={href}>
+      <NavLink>{text}</NavLink>
+      <BoldNavLink>{text}</BoldNavLink>
+    </MainLinkWrapper>
+  );
+};
 
 export default Header;

@@ -1,5 +1,5 @@
-import { createGlobalStyle } from 'styled-components/macro';
-import { COLORS } from '../../constants';
+import { createGlobalStyle } from "styled-components/macro";
+import { COLORS } from "../../constants";
 
 const GlobalStyles = createGlobalStyle`
 /* http://meyerweb.com/eric/tools/css/reset/
@@ -78,6 +78,7 @@ html {
   --color-gray-900: hsl(${COLORS.gray[900]});
 
   --color-backdrop: hsl(${COLORS.gray[700]} / 0.8);
+   --color-backdrop-open: hsl(${COLORS.gray[700]} / 0.9);
 
   /*
     Silence the warning about missing Reach Dialog styles
